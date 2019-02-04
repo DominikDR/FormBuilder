@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styles from './FormList.css';
 import Form from './Form/Form';
 
@@ -29,16 +29,14 @@ const data = [{
 }];
 
 export default class FormList extends React.Component {
-    constructForm = (data) => {
-        if (data.subForms.length) {
-            return (
-                <ol key={data.id}>
-                    {data.subForms.map(this.constructForm)}
-                </ol>
-            );
-        }
-        return <Form key={data.id} formId={data.id} />;
-    }
+    constructForm = data => (
+        <Fragment key={data.id}>
+            <Form formId={data.id} />
+            <ol>
+                {data.subForms.map(this.constructForm)}
+            </ol>
+        </Fragment>
+    )
 
     render() {
         return (
