@@ -1,17 +1,10 @@
 import React from 'react';
-
-const box = {
-    height: '100px',
-    width: '250px',
-    border: '1px solid #000',
-    marginBottom: '20px',
-    listStyleType: 'none',
-};
+import styles from './Form.css';
 
 const Form = ({ formId }) => {
     console.log('TCL: Form -> Formid -> formId', formId)
     return (
-        <li style={box}>{formId}</li>
+        <li className={styles.formBox}>{formId}</li>
     );
 };
 
