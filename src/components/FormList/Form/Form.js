@@ -1,31 +1,29 @@
 import React from 'react';
 import styles from './Form.css';
 
-const Form = ({ formId }) => {
-    console.log('TCL: Form -> Formid -> formId', formId)
-    return (
-        <li className={styles.formBox}>{formId}</li>
-    );
-};
+export default class Form extends React.PureComponent {
+    addSubForm = () => {
+        return 
+    }
 
-export default Form;
-
-
-const addSubForm = () => {
-    console.log("tjijis");
-    return
+    render() {
+        const { formObject } = this.props;
+        console.log('TCL: Form -> Formid -> formId', formObject);
+        return (
+            <li className={styles.formBox}>
+                {formObject.id}
+                <button onClick={this.addSubForm} type="submit" className={styles.addSubFormButton}>Add New</button>
+            </li>
+        );
+    }
 }
 
-const onButtonClick = () => {
-}
-
-/* <form className={styles.searchForm} onSubmit={this.handleSubmit}>
+/*
+ <form className={styles.searchForm} onSubmit={this.handleSubmit}>
             <input
                 type="text"
                 className={styles.searchInput}
                 placeholder="Type here"
             />
-
-            <button onClick={this.onButtonClick} type="submit" className={styles.searchButton}>Add New</button>
     </form>
 */
