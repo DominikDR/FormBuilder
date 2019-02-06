@@ -8,12 +8,25 @@ export default class FormList extends React.Component {
         data,
     }
 
+    addSubForm = (newForm) => {
+        const { data } = this.state;
+        this.setState({
+            data: {
+                ...data,
+                [newForm.parentID]: {
+                    ...data[newForm.parentID],
+                    subForms: [...data[newForm.parentID].subForms, newForm.id],
+                },
+                [newForm.id]: newForm,
+            },
+        }, () => console.log('TCL: FormList -> data state', this.state.data));
+    }
+
     constructForm = (dataKey) => {
-		console.log('TCL: FormList -> constructForm -> dataKey', dataKey)
         const { data } = this.state;
         return (
             <Fragment key={dataKey}>
-                <Form formObject={data[dataKey]} />
+                <Form formObject={data[dataKey]} addSubForm={this.addSubForm} />
                 <ol>
                     {data[dataKey].subForms.map(this.constructForm)}
                 </ol>
