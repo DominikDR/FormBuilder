@@ -2,10 +2,15 @@ import React from 'react';
 import styles from './Form.css';
 
 export default class Form extends React.PureComponent {
-    handleAddSubForm = (clickedFormId) => {
-        const { addSubForm } = this.props;
-        const newForm = this.createForm(clickedFormId);
-        return addSubForm(newForm);
+    handleAddSubForm = () => {
+        const { addSubForm, formID } = this.props;
+        const newForm = this.createForm(formID);
+        addSubForm(newForm);
+    }
+
+    handleDeleteSubForm = () => {
+        const { deleteSubForm, formID } = this.props;
+        deleteSubForm(formID);
     }
 
     createForm = (clickedFormId) => {
@@ -38,17 +43,24 @@ export default class Form extends React.PureComponent {
     }
 
     render() {
-        const { formObject } = this.props;
-        console.log('TCL: Form -> formObject', formObject);
+        const { formID } = this.props;
+        console.log('TCL: Form -> formID', formID);
         return (
             <li className={styles.formBox}>
-                {formObject.id}
+                {formID}
                 <button
-                    onClick={this.handleAddSubForm.bind(null, formObject.id)}
+                    onClick={this.handleAddSubForm}
                     type="submit"
-                    className={styles.addSubFormButton}
+                    className={styles.subFormButton}
                 >
                     Add New
+                </button>
+                <button
+                    onClick={this.handleDeleteSubForm}
+                    type="submit"
+                    className={styles.subFormButton}
+                >
+                    Delete
                 </button>
             </li>
         );
