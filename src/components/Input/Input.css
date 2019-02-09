@@ -1,0 +1,39 @@
+.formBox {
+    height: 140px;
+    width: 410px;
+    border: 2px solid #ababab;
+    margin-bottom: 20px;
+    list-style-type: none;
+    background-color: #f3f3f3;
+}
+
+.formButton {
+    height: 35px;
+    font-size: 15px;
+    border-radius: 7px;
+    border: none;
+    margin: 10px;
+}
+.formButton:focus {
+    outline:none;
+  }
+.formButton:hover {
+    cursor: pointer;
+}
+
+.addButton {
+    width: 120px;
+    background-color: #97e269;
+}
+.addButton:hover {
+    background-color: #7eca4e;
+}
+
+.deleteButton {
+    width: 80px;
+    border-radius: 7px;
+    background-color: #e9967a;
+}
+.deleteButton:hover {
+    background-color: #dd7856;
+}

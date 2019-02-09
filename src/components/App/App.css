@@ -3,6 +3,7 @@
 }
 .mainPage {
     min-height: 100vh;
-    background-color: #f3f3f3;
+    background-color: #e8e8e8;
     font-family: Arial, sans-serif;
+    padding: 30px;
 }
