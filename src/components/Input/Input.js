@@ -1,5 +1,5 @@
 import React from 'react';
-import classname from 'classnames';
+import classnames from 'classnames';
 import generateUniqueID from '../../generateUniqueID';
 
 import styles from './Input.css';
@@ -27,22 +27,19 @@ export default class Form extends React.PureComponent {
     }
 
     render() {
-        const { inputID } = this.props;
-
         return (
             <li className={styles.formBox}>
-                {inputID}
                 <button
                     onClick={this.handleAddSubInput}
                     type="button"
-                    className={classname(styles.formButton, styles.addButton)}
+                    className={classnames(styles.formButton, styles.addButton)}
                 >
                     Add Sub-Input
                 </button>
                 <button
                     onClick={this.handleDeleteSubInput}
                     type="button"
-                    className={classname(styles.formButton, styles.deleteButton)}
+                    className={classnames(styles.formButton, styles.deleteButton)}
                 >
                     Delete
                 </button>
@@ -50,13 +47,3 @@ export default class Form extends React.PureComponent {
         );
     }
 }
-
-/*
- <form className={styles.searchForm} onSubmit={this.handleSubmit}>
-            <input
-                type="text"
-                className={styles.searchInput}
-                placeholder="Type here"
-            />
-    </form>
-*/
