@@ -1,0 +1,19 @@
+.subList {
+    border-left: 1px solid #ababab;
+}
+
+.addInputButton {
+    height: 35px;
+    width: 120px;
+    background-color: #97e269;
+    font-size: 15px;
+    border-radius: 7px;
+    border: none;
+}
+.addInputButton:focus {
+    outline:none;
+  }
+.addInputButton:hover {
+    cursor: pointer;
+    background-color: #7eca4e;
+}
