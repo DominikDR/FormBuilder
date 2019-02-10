@@ -2,7 +2,7 @@
     border-left: 1px solid #ababab;
 }
 
-.addInputButton {
+.addFormButton {
     height: 35px;
     width: 120px;
     background-color: #97e269;
@@ -10,10 +10,10 @@
     border-radius: 7px;
     border: none;
 }
-.addInputButton:focus {
+.addFormButton:focus {
     outline:none;
   }
-.addInputButton:hover {
+.addFormButton:hover {
     cursor: pointer;
     background-color: #7eca4e;
 }
