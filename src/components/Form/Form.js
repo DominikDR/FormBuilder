@@ -2,26 +2,26 @@ import React from 'react';
 import classnames from 'classnames';
 import generateUniqueID from '../../generateUniqueID';
 
-import styles from './Input.css';
+import styles from './Form.css';
 
 export default class Form extends React.PureComponent {
-    handleAddSubInput = () => {
-        const { addSubInput, inputID } = this.props;
-        const newForm = this.createForm(inputID);
-        addSubInput(newForm);
+    handleAddSubForm = () => {
+        const { addSubForm, formID } = this.props;
+        const newForm = this.createForm(formID);
+        addSubForm(newForm);
     }
 
-    handleDeleteSubInput = () => {
-        const { deleteSubInput, inputID } = this.props;
-        deleteSubInput(inputID);
+    handleDeleteSubForm = () => {
+        const { deleteSubForm, formID } = this.props;
+        deleteSubForm(formID);
     }
 
-    createForm = (clickedInputID) => {
-        const newInputID = generateUniqueID();
+    createForm = (clickedFormID) => {
+        const newFormID = generateUniqueID();
         const newForm = {
-            id: newInputID,
-            parentID: clickedInputID,
-            subInputs: [],
+            id: newFormID,
+            parentID: clickedFormID,
+            subForms: [],
         };
         return newForm;
     }
@@ -30,14 +30,14 @@ export default class Form extends React.PureComponent {
         return (
             <li className={styles.formBox}>
                 <button
-                    onClick={this.handleAddSubInput}
+                    onClick={this.handleAddSubForm}
                     type="button"
                     className={classnames(styles.formButton, styles.addButton)}
                 >
                     Add Sub-Input
                 </button>
                 <button
-                    onClick={this.handleDeleteSubInput}
+                    onClick={this.handleDeleteSubForm}
                     type="button"
                     className={classnames(styles.formButton, styles.deleteButton)}
                 >

@@ -1,5 +1,5 @@
 import React from 'react';
-import FormList from '../FormList/FormList';
+import FormTree from '../FormTree/FormTree';
 
 import styles from './App.css';
 
@@ -8,7 +8,7 @@ export default class App extends React.Component {
     render() {
         return (
             <div className={styles.mainPage}>
-                <FormList />
+                <FormTree />
             </div>
         );
     }
