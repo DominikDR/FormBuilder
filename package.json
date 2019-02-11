@@ -9,7 +9,7 @@
     "build": "webpack --mode development",
     "postinstall": "npm run build",
     "predeploy": "rm -rf dist && webpack --mode development",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist "
   },
   "author": "DR",
   "license": "ISC",

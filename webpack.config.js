@@ -74,7 +74,7 @@ module.exports = {
         htmlPlugin,
         new MiniCssExtractPlugin({
             // Options similar to the same options in webpackOptions.output
-            // both options are optional
+            // both options are  optional
             filename: 'styles.css',
         }),
     ],
