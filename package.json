@@ -2,12 +2,12 @@
   "name": "formbuilder",
   "version": "1.0.0",
   "description": "",
-  "homepage": "https://dominikdr.github.io/FormBuilder",
+  "homepage": "https://dominikdr.github.io/formbuilder",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --config ./webpack.config.js --mode development --port=3000",
-    "predeploy": "npm start",
-    "deploy": "gh-pages -d start"
+    "predeploy": "rm -rf dist && webpack --mode development",
+    "deploy": "gh-pages -d dist"
   },
   "author": "DR",
   "license": "ISC",
