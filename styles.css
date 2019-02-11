@@ -1,0 +1,69 @@
+.Form_formBox_1BSpTyBoMl0lEWc8pfr6if {
+    height: 140px;
+    width: 410px;
+    border: 2px solid #ababab;
+    margin-bottom: 20px;
+    list-style-type: none;
+    background-color: #f3f3f3;
+}
+
+.Form_formButton_HzisNcYZJ3aeuu83k_CTi {
+    height: 35px;
+    font-size: 15px;
+    border-radius: 7px;
+    border: none;
+    margin: 10px;
+}
+.Form_formButton_HzisNcYZJ3aeuu83k_CTi:focus {
+    outline:none;
+  }
+.Form_formButton_HzisNcYZJ3aeuu83k_CTi:hover {
+    cursor: pointer;
+}
+
+.Form_addButton_1Sd2K1Ln842zezhHZjoBei {
+    width: 120px;
+    background-color: #97e269;
+}
+.Form_addButton_1Sd2K1Ln842zezhHZjoBei:hover {
+    background-color: #7eca4e;
+}
+
+.Form_deleteButton_YdQHFGHN7bybISeusf8bW {
+    width: 80px;
+    border-radius: 7px;
+    background-color: #e9967a;
+}
+.Form_deleteButton_YdQHFGHN7bybISeusf8bW:hover {
+    background-color: #dd7856;
+}
+
+.FormTree_subList_e0E9tuetbMGHhy9cVtn1H {
+    border-left: 1px solid #ababab;
+}
+
+.FormTree_addFormButton_K4i6KAF4Pygpf50TUYOvT {
+    height: 35px;
+    width: 120px;
+    background-color: #97e269;
+    font-size: 15px;
+    border-radius: 7px;
+    border: none;
+}
+.FormTree_addFormButton_K4i6KAF4Pygpf50TUYOvT:focus {
+    outline:none;
+  }
+.FormTree_addFormButton_K4i6KAF4Pygpf50TUYOvT:hover {
+    cursor: pointer;
+    background-color: #7eca4e;
+}
+
+body {
+    margin: 0;
+}
+.App_mainPage_3x6O9PLccsZ1cZkRs7bYeb {
+    min-height: 100vh;
+    background-color: #e8e8e8;
+    font-family: Arial, sans-serif;
+    padding: 30px;
+}
