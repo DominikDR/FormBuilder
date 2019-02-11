@@ -1,6 +1,8 @@
 ## Form Builder
 
-Application which builds forms recursively in React.
+React application which builds forms recursively.
+
+Live version on https://dominikdr.github.io/FormBuilder
 
 #### Instalation
 
