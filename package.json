@@ -7,7 +7,6 @@
   "scripts": {
     "start": "webpack-dev-server --config ./webpack.config.js --mode development --port=3000",
     "build": "webpack --mode development",
-    "postinstall": "npm run build",
     "predeploy": "rm -rf dist && webpack --mode development",
     "deploy": "gh-pages -d dist "
   },
