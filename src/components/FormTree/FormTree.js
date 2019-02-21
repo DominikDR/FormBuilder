@@ -1,11 +1,12 @@
 import React, { Fragment } from 'react';
-import Form from '../Form/Form';
-import data from '../../data';
-import generateUniqueID from '../../generateUniqueID';
+import { random } from 'lodash.random';
+import { Form } from '../Form/Form';
+import { data } from '../../data';
+import { MIN_RANGE, MAX_RANGE } from '../../../consts';
 
 import styles from './FormTree.css';
 
-export default class FormTree extends React.Component {
+export class FormTree extends React.Component {
     state = {
         data,
     }
@@ -13,7 +14,7 @@ export default class FormTree extends React.Component {
     addForm = () => {
         const { data } = this.state;
         const newForm = {
-            id: generateUniqueID(),
+            id: random(MIN_RANGE, MAX_RANGE),
             subForms: [],
         };
         this.setState({

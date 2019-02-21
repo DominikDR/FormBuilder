@@ -28,6 +28,7 @@
         }],
         "no-plusplus": [0],
         "no-use-before-define": ["error", { "functions": false }],
+        "import/prefer-default-export": "off",
         "object-property-newline": ["error", { "allowAllPropertiesOnSameLine": true }]
     },
     "plugins": [

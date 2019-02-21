@@ -1,5 +1,5 @@
 import React from 'react';
-import FormTree from '../FormTree/FormTree';
+import { FormTree } from '../FormTree/FormTree';
 
 import styles from './App.css';
 
