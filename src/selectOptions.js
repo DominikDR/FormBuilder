@@ -4,13 +4,26 @@ const type = [
     { value: 'radio', label: 'Yes / No' },
 ];
 
-const condition = {
-    text: ['Equals'],
-    number: ['Equals', 'Greater than', 'Less than'],
-    radio: ['Equals'],
+const conditionOption = {
+    text: [{ value: 'equals', label: 'Equals' }],
+    number: [{
+        value: 'equals', label: 'Equals',
+    }, {
+        value: 'greater', label: 'Greater than',
+    }, {
+        value: 'less', label: 'Less than',
+    }],
+    radio: [{ value: 'equals', label: 'Equals' }],
 };
+
+const radioOptions = [{
+    value: 'yes', label: 'Yes',
+}, {
+    value: 'no', label: 'No',
+}];
 
 module.exports = {
     type,
-    condition,
+    conditionOption,
+    radioOptions,
 };

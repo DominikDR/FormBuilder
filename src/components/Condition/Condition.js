@@ -1,42 +1,59 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import { conditionOption, radioOptions } from '../../selectOptions';
+import { Select } from '../Select/Select';
 
 const Condition = ({ type }) => {
-    switch (type) {
+	console.log('TCL: Condition -> type', type)
+    /* switch (type) {
         case 'text':
             return (
-                <form>
+                <>
                     <span>Condition</span>
-                    <select
-                        id="conditionType"
-                        type={type}
-                    >
-                        <option>
-                            Equals
-                        </option>
-                    </select>
+                    <Select options={conditionOption[type]} />
                     <label htmlFor="answer">
-                        <input type="text" id="answer" />
+                        <input type={type} id="answer" />
                     </label>
-                </form>
+                </>
             );
-
+        case 'number':
+            return (
+                <>
+                    <span>Condition</span>
+                    <Select options={conditionOption[type]} />
+                    <label htmlFor="answer">
+                        <input type={type} id="answer" />
+                    </label>
+                </>
+            );
         case 'radio':
             return (
-                <form>
+                <>
                     <span>Condition</span>
-                    <select
-                        id="conditionType"
-                        type={type}
-                    >
-                        <option>
-                            Equals
-                        </option>
-                    </select>
-                </form>
+                    <Select options={conditionOption[type]} />
+                    <Select options={radioOptions} />
+                </>
             );
         default:
             return null;
+    } */
+    if (type === 'radio') {
+        return (
+            <>
+                <span>Condition</span>
+                <Select options={conditionOption[type]} />
+                <Select options={radioOptions} />
+            </>
+        );
     }
+    return (
+        <>
+            <span>Condition</span>
+            <Select options={conditionOption[type]} />
+            <label htmlFor="answer">
+                <input type={type} id="answer" />
+            </label>
+        </>
+    );
 };
 
 export { Condition };

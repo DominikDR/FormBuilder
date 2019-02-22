@@ -2,10 +2,9 @@ import React from 'react';
 import styles from './Select.css';
 
 const Select = ({ options }) => {
-    console.log('TCL: Select -> options', options);
     return (
         <select
-            id="questionType"
+            id="conditionType"
             type="typeSelect"
             defaultValue="default"
             required

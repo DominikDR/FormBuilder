@@ -37,21 +37,16 @@ export class Form extends React.PureComponent {
     render() {
         const { formID } = this.props;
         const parent = data[formID].parentID ? data[data[formID].parentID] : null;
-		console.log('TCL: Form -> render -> parent', data[formID].parentID)
-
-        const textConditions = ['Equals'];
-        const numericConditions = ['Equals', 'Greater than', 'Less than'];
-        const radioConditions = ['Equals'];
 
         return (
             <li className={styles.formBox}>
-                {parent && <Condition type={parent.type} />}
                 <form onSubmit={this.handleSubmit}>
-                    <label htmlFor="question">
-                        Question
-                        <input type="text" id="question" />
-                    </label>
+                    {parent && <Condition type={parent.type} />}
                 </form>
+                <label htmlFor="question">
+                    Question
+                    <input type="text" id="question" />
+                </label>
                 <span>Type</span>
                 <Select options={type} />
                 <button
