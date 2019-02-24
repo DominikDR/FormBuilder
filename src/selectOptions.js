@@ -1,7 +1,7 @@
 const type = [
+    { value: 'radio', label: 'Yes / No' },
     { value: 'text', label: 'Text' },
     { value: 'number', label: 'Number' },
-    { value: 'radio', label: 'Yes / No' },
 ];
 
 const conditionOption = {

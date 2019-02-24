@@ -4,7 +4,6 @@ import _random from 'lodash.random';
 import { Condition } from '../Condition/Condition';
 import { Select } from '../Select/Select';
 import { type } from '../../selectOptions';
-import { data } from '../../data';
 import { MIN_RANGE, MAX_RANGE } from '../../../consts';
 
 import styles from './Form.css';
@@ -21,12 +20,12 @@ export class Form extends React.PureComponent {
         deleteSubForm(formID);
     }
 
-    createForm = (clickedFormID) => {
-        const newFormID = _random(MIN_RANGE, MAX_RANGE);
+    createForm = (clickedForm) => {
         const newForm = {
-            id: newFormID,
-            parentID: clickedFormID,
+            id: _random(MIN_RANGE, MAX_RANGE),
+            parentID: clickedForm,
             subForms: [],
+            type: 'radio',
         };
         return newForm;
     }
@@ -34,21 +33,31 @@ export class Form extends React.PureComponent {
     constructForm = () => {
     }
 
+    handleSelect = (event) => {
+        const { formID, onSelect } = this.props;
+        onSelect(formID, event.target.value);
+    }
+
     render() {
-        const { formID } = this.props;
-        const parent = data[formID].parentID ? data[data[formID].parentID] : null;
+        const { formID, parent, question, onSelect } = this.props;
 
         return (
             <li className={styles.formBox}>
                 <form onSubmit={this.handleSubmit}>
-                    {parent && <Condition type={parent.type} />}
+                    {parent && <Condition type={parent.type} onSelect={this.handleSelect} />}
                 </form>
-                <label htmlFor="question">
+                <label
+                    htmlFor="question"
+                >
                     Question
-                    <input type="text" id="question" />
+                    <input
+                        type="text"
+                        id="question"
+                        defaultValue={question}
+                    />
                 </label>
                 <span>Type</span>
-                <Select options={type} />
+                <Select options={type} onChange={this.handleSelect} />
                 <button
                     onClick={this.handleAddSubForm}
                     type="button"

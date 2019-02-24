@@ -1,17 +1,16 @@
 import React from 'react';
 import styles from './Select.css';
 
-const Select = ({ options }) => {
+const Select = ({ options, onChange }) => {
     return (
+        // eslint-disable-next-line jsx-a11y/no-onchange
         <select
             id="conditionType"
             type="typeSelect"
-            defaultValue="default"
+            defaultValue={options[0].value}
             required
+            onChange={onChange}
         >
-            <option value="default" disabled>
-                Select a value ...
-            </option>
             {options.map((option, index) => (
                 <option key={`${option.label}${index}`} value={option.value}>
                     {option.label}
