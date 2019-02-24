@@ -8,7 +8,7 @@ import { MIN_RANGE, MAX_RANGE } from '../../../consts';
 
 import styles from './Form.css';
 
-export class Form extends React.PureComponent {
+export class Form extends React.Component {
     handleAddSubForm = () => {
         const { addSubForm, formID } = this.props;
         const newForm = this.createForm(formID);
@@ -39,25 +39,26 @@ export class Form extends React.PureComponent {
     }
 
     render() {
-        const { formID, parent, question, onSelect } = this.props;
+        const { formID, parentType, question, onSelect } = this.props;
+		console.log('TCL: Form -> parentType', formID, parentType)
 
         return (
             <li className={styles.formBox}>
                 <form onSubmit={this.handleSubmit}>
-                    {parent && <Condition type={parent.type} onSelect={this.handleSelect} />}
+                    {parentType && <Condition type={parentType} onSelect={this.handleSelect} />}
+                    <label
+                        htmlFor="question"
+                    >
+                        Question
+                        <input
+                            type="text"
+                            id="question"
+                            defaultValue={question}
+                        />
+                    </label>
+                    <span>Type</span>
+                    <Select options={type} onChange={this.handleSelect} />
                 </form>
-                <label
-                    htmlFor="question"
-                >
-                    Question
-                    <input
-                        type="text"
-                        id="question"
-                        defaultValue={question}
-                    />
-                </label>
-                <span>Type</span>
-                <Select options={type} onChange={this.handleSelect} />
                 <button
                     onClick={this.handleAddSubForm}
                     type="button"

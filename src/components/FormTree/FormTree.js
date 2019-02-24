@@ -78,18 +78,21 @@ export class FormTree extends React.Component {
 
     constructForm = (dataKey) => {
         const { data } = this.state;
+        const form = data[dataKey];
+        const parentType = form.parentID && data[form.parentID].type;
+
         return (
             <Fragment key={dataKey}>
                 <Form
-                    formID={data[dataKey].id}
-                    parent={data[data[dataKey].parentID]}
-                    question={data[dataKey].question}
+                    formID={form.id}
+                    parentType={parentType}
+                    question={form.question}
                     addSubForm={this.addSubForm}
                     deleteSubForm={this.deleteSubForm}
                     onSelect={this.setConditionType}
                 />
                 <ol className={styles.subTree}>
-                    {data[dataKey].subForms.map(this.constructForm)}
+                    {form.subForms.map(this.constructForm)}
                 </ol>
             </Fragment>
         );

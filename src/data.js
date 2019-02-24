@@ -2,13 +2,11 @@ const data = {
     a1: {
         id: 'a1',
         question: 'Do you own car?',
-        type: 'radio',
         subForms: ['b3'],
     },
     a2: {
         id: 'a2',
         question: 'What is your company name?',
-        type: 'number',
         subForms: ['j9'],
     },
     b2: {
