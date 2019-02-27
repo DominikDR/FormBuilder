@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
-import { random } from 'lodash.random';
+import _random from 'lodash.random';
 import { Form } from '../Form/Form';
+import { AddButton } from '../Buttons/Buttons';
 import { data } from '../../data';
 import { MIN_RANGE, MAX_RANGE } from '../../../consts';
 
@@ -14,12 +15,14 @@ export class FormTree extends React.Component {
     addForm = () => {
         const { data } = this.state;
         const newForm = {
-            id: random(MIN_RANGE, MAX_RANGE),
+            id: _random(MIN_RANGE, MAX_RANGE),
             subForms: [],
+            type: 'radio',
         };
         this.setState({
             data: {
                 ...data,
+                sequence: [...data.sequence, newForm.id],
                 [newForm.id]: newForm,
             },
         });
@@ -63,7 +66,6 @@ export class FormTree extends React.Component {
     }
 
     setConditionType = (id, value) => {
-        console.log('TCL: FormTree -> setConditionType -> id, event', id, value)
         const { data } = this.state;
         this.setState({
             data: {
@@ -102,14 +104,12 @@ export class FormTree extends React.Component {
         const { data } = this.state;
         return (
             <div>
-                {Object.keys(data).filter(dataKey => !data[dataKey].parentID).map(this.constructForm)}
-                <button
+                {data.sequence.filter(dataKey => !data[dataKey].parentID).map(this.constructForm)}
+                <AddButton
                     onClick={this.addForm}
+                    text="Add Input"
                     type="button"
-                    className={styles.addFormButton}
-                >
-                    Add Input
-                </button>
+                />
             </div>
         );
     }

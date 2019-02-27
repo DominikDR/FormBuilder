@@ -1,26 +1,60 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { conditionOption, radioOptions } from '../../selectOptions';
 import { Select } from '../Select/Select';
 
-const Condition = ({ type, handleSelect }) => {
-    if (type === 'radio') {
+export class Condition extends React.PureComponent {
+    state = {
+        radio: 'yes',
+        answerInput: '',
+    };
+
+    handleSelectedCondition = (event) => {
+        const { onConditionSelect } = this.props;
+        const { radio, answerInput } = this.state;
+        const conditions = [event.target.value, answerInput || radio];
+        onConditionSelect(conditions);
+    }
+
+    handleRadioOption = (event) => {
+        this.setState({
+            radio: event.target.value,
+        });
+    }
+
+    handleAnswerInput = (event) => {
+        this.setState({
+            answerInput: event.target.value,
+        });
+    }
+
+    render() {
+        const { formID, type } = this.props;
         return (
             <>
-                <span>Condition</span>
-                <Select options={conditionOption[type]} />
-                <Select options={radioOptions} />
+                {type === 'radio'
+                    ? (
+                        <>
+                            <span>Condition</span>
+                            <Select options={conditionOption[type]} onChange={this.handleSelectedCondition} />
+                            <Select options={radioOptions} onChange={this.handleRadioOption} />
+                        </>
+                    )
+                    : (
+                        <>
+                            <span>Condition</span>
+                            <Select options={conditionOption[type]} onChange={this.handleSelectedCondition} />
+                            <label htmlFor={`${formID}answer`}>
+                                answer
+                                <input
+                                    type={type}
+                                    id={`${formID}answer`}
+                                    onChange={this.handleAnswerInput}
+                                />
+                            </label>
+                        </>
+                    )
+                }
             </>
         );
     }
-    return (
-        <>
-            <span>Condition</span>
-            <Select options={conditionOption[type]} />
-            <label htmlFor="answer">
-                <input type={type} id="answer" />
-            </label>
-        </>
-    );
-};
-
-export { Condition };
+}

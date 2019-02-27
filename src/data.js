@@ -1,13 +1,16 @@
 const data = {
+    sequence: ['a1', 'a2'],
     a1: {
         id: 'a1',
         question: 'Do you own car?',
         subForms: ['b3'],
+        type: 'radio',
     },
     a2: {
         id: 'a2',
         question: 'What is your company name?',
         subForms: ['j9'],
+        type: 'text',
     },
     b2: {
         id: 'b2',
@@ -34,7 +37,7 @@ const data = {
         id: 'j9',
         parentID: 'a2',
         question: 'How long are working there?',
-        type: 'text',
+        type: 'number',
         subForms: [],
     },
 };

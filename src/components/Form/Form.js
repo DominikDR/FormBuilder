@@ -1,7 +1,7 @@
 import React from 'react';
-import classnames from 'classnames';
 import _random from 'lodash.random';
 import { Condition } from '../Condition/Condition';
+import { AddButton, DeleteButton } from '../Buttons/Buttons';
 import { Select } from '../Select/Select';
 import { type } from '../../selectOptions';
 import { MIN_RANGE, MAX_RANGE } from '../../../consts';
@@ -9,6 +9,14 @@ import { MIN_RANGE, MAX_RANGE } from '../../../consts';
 import styles from './Form.css';
 
 export class Form extends React.Component {
+    constructor(props) {
+        super(props);
+        this.questionInput = React.createRef();
+        this.state = {
+            conditions: [],
+        };
+    }
+
     handleAddSubForm = () => {
         const { addSubForm, formID } = this.props;
         const newForm = this.createForm(formID);
@@ -21,58 +29,70 @@ export class Form extends React.Component {
     }
 
     createForm = (clickedForm) => {
+        const { conditions } = this.state;
         const newForm = {
             id: _random(MIN_RANGE, MAX_RANGE),
             parentID: clickedForm,
             subForms: [],
+            question: this.questionInput.current.value,
+            conditions,
             type: 'radio',
         };
         return newForm;
     }
 
-    constructForm = () => {
+    handleSubmit = (event) => {
+        event.preventDefault();
     }
 
-    handleSelect = (event) => {
+    onConditionSelect = (conditions) => {
+        this.setState({
+            conditions,
+        });
+    }
+
+    handleSelectType = (event) => {
+        event.preventDefault();
         const { formID, onSelect } = this.props;
         onSelect(formID, event.target.value);
     }
 
     render() {
         const { formID, parentType, question, onSelect } = this.props;
-		console.log('TCL: Form -> parentType', formID, parentType)
 
         return (
             <li className={styles.formBox}>
                 <form onSubmit={this.handleSubmit}>
-                    {parentType && <Condition type={parentType} onSelect={this.handleSelect} />}
-                    <label
-                        htmlFor="question"
-                    >
+                    {parentType
+                        && (
+                            <Condition
+                                formID={formID}
+                                type={parentType}
+                                onConditionSelect={this.onConditionSelect}
+                            />
+                        )}
+                    <label htmlFor={`${formID}question`}>
                         Question
                         <input
                             type="text"
-                            id="question"
+                            id={`${formID}question`}
+                            ref={this.questionInput}
                             defaultValue={question}
                         />
                     </label>
                     <span>Type</span>
-                    <Select options={type} onChange={this.handleSelect} />
+                    <Select options={type} onChange={this.handleSelectType} />
+                    <AddButton
+                        onClick={this.handleAddSubForm}
+                        type="submit"
+                        text="Add Sub-Input"
+                    />
                 </form>
-                <button
-                    onClick={this.handleAddSubForm}
-                    type="button"
-                    className={classnames(styles.formButton, styles.addButton)}
-                >
-                    Add Sub-Input
-                </button>
-                <button
+                <DeleteButton
                     onClick={this.handleDeleteSubForm}
                     type="button"
-                    className={classnames(styles.formButton, styles.deleteButton)}
-                >
-                    Delete
-                </button>
+                    text="Delete"
+                />
             </li>
         );
     }
