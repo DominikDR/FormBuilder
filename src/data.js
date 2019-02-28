@@ -3,14 +3,14 @@ const data = {
     a1: {
         id: 'a1',
         question: 'Do you own car?',
-        subForms: ['b3'],
         type: 'radio',
+        subForms: ['b3'],
     },
     a2: {
         id: 'a2',
         question: 'What is your company name?',
-        subForms: ['j9'],
         type: 'text',
+        subForms: ['j9'],
     },
     b2: {
         id: 'b2',

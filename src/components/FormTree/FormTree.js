@@ -54,6 +54,7 @@ export class FormTree extends React.Component {
         }
 
         delete dataCopy[clickedFormID];
+        dataCopy.sequence = dataCopy.sequence.filter(id => id !== clickedFormID);
         this.setState({
             data: dataCopy,
         });
@@ -78,6 +79,19 @@ export class FormTree extends React.Component {
         }, () => {console.log('state', this.state.data); });
     }
 
+    onSubmit = (id, question) => {
+		console.log('TCL: onSubmit -> id, question', id, question)
+        this.setState({
+            data: {
+                ...data,
+                [id]: {
+                    ...data[id],
+                    question,
+                },
+            },
+        }, () => {console.log('state', this.state.data); });
+    }
+
     constructForm = (dataKey) => {
         const { data } = this.state;
         const form = data[dataKey];
@@ -92,6 +106,7 @@ export class FormTree extends React.Component {
                     addSubForm={this.addSubForm}
                     deleteSubForm={this.deleteSubForm}
                     onSelect={this.setConditionType}
+                    onSubmit={this.onSubmit}
                 />
                 <ol className={styles.subTree}>
                     {form.subForms.map(this.constructForm)}
@@ -104,7 +119,7 @@ export class FormTree extends React.Component {
         const { data } = this.state;
         return (
             <div>
-                {data.sequence.filter(dataKey => !data[dataKey].parentID).map(this.constructForm)}
+                {data.sequence.map(this.constructForm)}
                 <AddButton
                     onClick={this.addForm}
                     text="Add Input"

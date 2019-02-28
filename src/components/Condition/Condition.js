@@ -31,27 +31,19 @@ export class Condition extends React.PureComponent {
         const { formID, type } = this.props;
         return (
             <>
+                <span>Condition</span>
+                <Select options={conditionOption[type]} onChange={this.handleSelectedCondition} />
                 {type === 'radio'
-                    ? (
-                        <>
-                            <span>Condition</span>
-                            <Select options={conditionOption[type]} onChange={this.handleSelectedCondition} />
-                            <Select options={radioOptions} onChange={this.handleRadioOption} />
-                        </>
-                    )
+                    ? <Select options={radioOptions} onChange={this.handleRadioOption} />
                     : (
-                        <>
-                            <span>Condition</span>
-                            <Select options={conditionOption[type]} onChange={this.handleSelectedCondition} />
-                            <label htmlFor={`${formID}answer`}>
-                                answer
-                                <input
-                                    type={type}
-                                    id={`${formID}answer`}
-                                    onChange={this.handleAnswerInput}
-                                />
-                            </label>
-                        </>
+                        <label htmlFor={`${formID}answer`}>
+                            answer
+                            <input
+                                type={type}
+                                id={`${formID}answer`}
+                                onChange={this.handleAnswerInput}
+                            />
+                        </label>
                     )
                 }
             </>
