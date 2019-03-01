@@ -21,9 +21,11 @@ export class Form extends React.Component {
     }
 
     createForm = (clickedForm) => {
+        const { parentType } = this.props;
         const newForm = {
             id: _random(MIN_RANGE, MAX_RANGE),
             parentID: clickedForm,
+            conditions: ['equals', 'yes'],
             type: 'radio',
             subForms: [],
         };
@@ -41,7 +43,7 @@ export class Form extends React.Component {
     }
 
     handleSelectType = (event) => {
-        const { formID, onSelect } = this.props;
+        const { formID, onSelect, setConditions } = this.props;
         onSelect(formID, event.target.value);
     }
 
