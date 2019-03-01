@@ -67,6 +67,7 @@ export class FormTree extends React.Component {
     }
 
     setConditionType = (id, value) => {
+		console.log('TCL: value', value)
         const { data } = this.state;
         this.setState({
             data: {
@@ -79,8 +80,9 @@ export class FormTree extends React.Component {
         }, () => {console.log('state', this.state.data); });
     }
 
-    onSubmit = (id, question) => {
+    onChange = (id, question) => {
 		console.log('TCL: onSubmit -> id, question', id, question)
+        const { data } = this.state;
         this.setState({
             data: {
                 ...data,
@@ -106,7 +108,7 @@ export class FormTree extends React.Component {
                     addSubForm={this.addSubForm}
                     deleteSubForm={this.deleteSubForm}
                     onSelect={this.setConditionType}
-                    onSubmit={this.onSubmit}
+                    onChange={this.onChange}
                 />
                 <ol className={styles.subTree}>
                     {form.subForms.map(this.constructForm)}

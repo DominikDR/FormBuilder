@@ -11,7 +11,6 @@ import styles from './Form.css';
 export class Form extends React.Component {
     state = {
         conditions: [],
-        question: '',
     };
 
     handleAddSubForm = () => {
@@ -37,14 +36,13 @@ export class Form extends React.Component {
         return newForm;
     }
 
-    handleInput = (event) => {
-        event.preventDefault();
-        this.setState({
-            question: event.target.value,
-        });
+    handleQuestionInput = (event) => {
+        const { formID, onChange } = this.props;
+        onChange(formID, event.target.value);
     }
 
     onConditionSelect = (conditions) => {
+		console.log('TCL: Form -> onConditionSelect -> conditions', conditions)
         this.setState({
             conditions,
         });
@@ -75,7 +73,7 @@ export class Form extends React.Component {
                         <input
                             type="text"
                             id={`${formID}`}
-                            onChange={this.handleInput}
+                            onChange={this.handleQuestionInput}
                             defaultValue={question}
                         />
                     </label>
