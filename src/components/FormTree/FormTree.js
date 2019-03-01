@@ -66,6 +66,19 @@ export class FormTree extends React.Component {
         return [...subForms, ...subForms.map(this.sumNestedForms).flat()];
     }
 
+    setConditions = (id, conditions) => {
+        const { data } = this.state;
+        this.setState({
+            data: {
+                ...data,
+                [id]: {
+                    ...data[id],
+                    conditions,
+                },
+            },
+        }, () => {console.log('state', this.state.data); });
+    }
+
     setConditionType = (id, value) => {
 		console.log('TCL: value', value)
         const { data } = this.state;
@@ -81,7 +94,6 @@ export class FormTree extends React.Component {
     }
 
     onChange = (id, question) => {
-		console.log('TCL: onSubmit -> id, question', id, question)
         const { data } = this.state;
         this.setState({
             data: {
@@ -109,6 +121,7 @@ export class FormTree extends React.Component {
                     deleteSubForm={this.deleteSubForm}
                     onSelect={this.setConditionType}
                     onChange={this.onChange}
+                    setConditions={this.setConditions}
                 />
                 <ol className={styles.subTree}>
                     {form.subForms.map(this.constructForm)}

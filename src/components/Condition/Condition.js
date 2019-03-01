@@ -9,6 +9,14 @@ export class Condition extends React.PureComponent {
         answerInput: '',
     };
 
+    handleChange = (event) => {
+        const { target: { name, value } } = event;
+		console.log('TCL: Condition -> handleChange', name, value)
+        this.setState({
+            [name]: value,
+        }, () => this.onChange());
+    }
+
     onChange = () => {
         const { onConditionSelect } = this.props;
         const { radio, answerInput, selectedValue } = this.state;
@@ -17,36 +25,14 @@ export class Condition extends React.PureComponent {
         onConditionSelect(conditions);
     }
 
-    handleChange = (event) => {
-		console.log('TCL: Condition -> handleChange -> event', event)
-        const { target: { name, value } } = event;
-        /* const target = event.target;
-        const name = target.name;
-        const value = target.value; */
-        this.setState({
-            [name]: value,
-        });
-    }
-    /* handleRadioOption = (event) => {
-        this.setState({
-            radio: event.target.value,
-        });
-    }
-
-    handleAnswerInput = (event) => {
-        this.setState({
-            answerInput: event.target.value,
-        });
-    } */
-
     render() {
         const { formID, type } = this.props;
         return (
             <>
                 <span>Condition</span>
-                <Select options={conditionOption[type]} onChange={this.handleSelectedCondition} name="selectedValue" />
+                <Select options={conditionOption[type]} onChange={this.handleChange} name="selectedValue" />
                 {type === 'radio'
-                    ? <Select options={radioOptions} onChange={this.handleRadioOption} name="radio" />
+                    ? <Select options={radioOptions} onChange={this.handleChange} name="radio" />
                     : (
                         <label htmlFor={`${formID}answer`}>
                             answer
@@ -54,7 +40,7 @@ export class Condition extends React.PureComponent {
                                 type={type}
                                 id={`${formID}answer`}
                                 name="answerInput"
-                                onChange={this.handleAnswerInput}
+                                onChange={this.handleChange}
                             />
                         </label>
                     )

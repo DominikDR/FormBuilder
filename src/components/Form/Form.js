@@ -9,10 +9,6 @@ import { MIN_RANGE, MAX_RANGE } from '../../../consts';
 import styles from './Form.css';
 
 export class Form extends React.Component {
-    state = {
-        conditions: [],
-    };
-
     handleAddSubForm = () => {
         const { addSubForm, formID } = this.props;
         const newForm = this.createForm(formID);
@@ -25,15 +21,18 @@ export class Form extends React.Component {
     }
 
     createForm = (clickedForm) => {
-        const { conditions } = this.state;
         const newForm = {
             id: _random(MIN_RANGE, MAX_RANGE),
             parentID: clickedForm,
-            subForms: [],
-            conditions,
             type: 'radio',
+            subForms: [],
         };
         return newForm;
+    }
+
+    onConditionSelect = (conditions) => {
+        const { formID, setConditions } = this.props;
+        setConditions(formID, conditions);
     }
 
     handleQuestionInput = (event) => {
@@ -41,15 +40,7 @@ export class Form extends React.Component {
         onChange(formID, event.target.value);
     }
 
-    onConditionSelect = (conditions) => {
-		console.log('TCL: Form -> onConditionSelect -> conditions', conditions)
-        this.setState({
-            conditions,
-        });
-    }
-
     handleSelectType = (event) => {
-        event.preventDefault();
         const { formID, onSelect } = this.props;
         onSelect(formID, event.target.value);
     }
