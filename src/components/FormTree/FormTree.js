@@ -16,8 +16,8 @@ export class FormTree extends React.Component {
         const { data } = this.state;
         const newForm = {
             id: _random(MIN_RANGE, MAX_RANGE),
-            subForms: [],
             type: 'radio',
+            subForms: [],
         };
         this.setState({
             data: {
@@ -39,7 +39,7 @@ export class FormTree extends React.Component {
                 },
                 [newForm.id]: newForm,
             },
-        });
+        }, () => {console.log('state', newForm); });
     }
 
     deleteSubForm = (clickedFormID) => {
@@ -68,39 +68,27 @@ export class FormTree extends React.Component {
 
     setConditions = (id, conditions) => {
         const { data } = this.state;
+        console.log("data[id.subForms]", data[data[id].subForms[0]])
         this.setState({
             data: {
                 ...data,
                 [id]: {
                     ...data[id],
-                    conditions,
+                    conditions: [...data[id].conditions, conditions],
                 },
             },
-        }, () => {console.log('state', this.state.data); });
+        }, () => {console.log('stateAftersetConditions', this.state.data); });
     }
 
-    setConditionType = (id, value) => {
-		console.log('TCL: value', value)
+    setChange = (id, handledValueObject) => {
+        const key = Object.keys(handledValueObject);
         const { data } = this.state;
         this.setState({
             data: {
                 ...data,
                 [id]: {
                     ...data[id],
-                    type: value,
-                },
-            },
-        }, () => {console.log('state', this.state.data); });
-    }
-
-    onChange = (id, question) => {
-        const { data } = this.state;
-        this.setState({
-            data: {
-                ...data,
-                [id]: {
-                    ...data[id],
-                    question,
+                    [key]: handledValueObject[key],
                 },
             },
         }, () => {console.log('state', this.state.data); });
@@ -115,12 +103,12 @@ export class FormTree extends React.Component {
             <Fragment key={dataKey}>
                 <Form
                     formID={form.id}
+                    formType={form.type}
                     parentType={parentType}
                     question={form.question}
                     addSubForm={this.addSubForm}
                     deleteSubForm={this.deleteSubForm}
-                    onSelect={this.setConditionType}
-                    onChange={this.onChange}
+                    handleChange={this.setChange}
                     setConditions={this.setConditions}
                 />
                 <ol className={styles.subTree}>

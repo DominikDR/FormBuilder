@@ -3,7 +3,7 @@ import _random from 'lodash.random';
 import { Condition } from '../Condition/Condition';
 import { AddButton, DeleteButton } from '../Buttons/Buttons';
 import { Select } from '../Select/Select';
-import { type } from '../../selectOptions';
+import { type, conditionOption, radioOptions } from '../../selectOptions';
 import { MIN_RANGE, MAX_RANGE } from '../../../consts';
 
 import styles from './Form.css';
@@ -21,34 +21,39 @@ export class Form extends React.Component {
     }
 
     createForm = (clickedForm) => {
-        const { parentType } = this.props;
+        const { formType } = this.props;
         const newForm = {
             id: _random(MIN_RANGE, MAX_RANGE),
             parentID: clickedForm,
-            conditions: ['equals', 'yes'],
+            conditions: this.setInitialConditions(formType),
             type: 'radio',
             subForms: [],
         };
         return newForm;
     }
 
-    onConditionSelect = (conditions) => {
+    setInitialConditions = (formType) => {
+        const defaultSelectValue = conditionOption[formType][0].value;
+        if (formType === 'radio') {
+            return [defaultSelectValue, radioOptions[0].value];
+        }
+        return [defaultSelectValue, ''];
+    }
+
+    onConditionSelect = (conditionValue) => {
+		console.log('TCL: Form -> onConditionSelect -> conditionValue', conditionValue)
         const { formID, setConditions } = this.props;
-        setConditions(formID, conditions);
+        setConditions(formID, conditionValue);
     }
 
-    handleQuestionInput = (event) => {
-        const { formID, onChange } = this.props;
-        onChange(formID, event.target.value);
-    }
-
-    handleSelectType = (event) => {
-        const { formID, onSelect, setConditions } = this.props;
-        onSelect(formID, event.target.value);
+    getChange = (event) => {
+        const { formID, handleChange } = this.props;
+        const { target: { name, value } } = event;
+        handleChange(formID, { [name]: value });
     }
 
     render() {
-        const { formID, parentType, question, onSelect } = this.props;
+        const { formID, parentType, question } = this.props;
 
         return (
             <li className={styles.formBox}>
@@ -65,13 +70,18 @@ export class Form extends React.Component {
                         Question
                         <input
                             type="text"
+                            name="question"
                             id={`${formID}`}
-                            onChange={this.handleQuestionInput}
+                            onChange={this.getChange}
                             defaultValue={question}
                         />
                     </label>
                     <span>Type</span>
-                    <Select options={type} onChange={this.handleSelectType} />
+                    <Select
+                        name="type"
+                        options={type}
+                        onChange={this.getChange}
+                    />
                 </form>
                 <AddButton
                     onClick={this.handleAddSubForm}
