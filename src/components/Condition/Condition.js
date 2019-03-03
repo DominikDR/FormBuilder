@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { conditionOption, radioOptions } from '../../selectOptions';
 import { Select } from '../Select/Select';
 
@@ -32,3 +33,12 @@ export class Condition extends React.PureComponent {
         );
     }
 }
+
+Condition.propTypes = {
+    type: PropTypes.string.isRequired,
+    formID: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+    ]).isRequired,
+    onConditionSelect: PropTypes.func.isRequired,
+};

@@ -87,23 +87,18 @@ export class FormTree extends React.Component {
 
     setChange = (id, handledValueObject) => {
         const { data } = this.state;
-        let dataCopy = JSON.parse(JSON.stringify(data));
+        const dataCopy = JSON.parse(JSON.stringify(data));
         const { type } = handledValueObject;
         const { subForms } = dataCopy[id];
         if (type && subForms.length) {
-            dataCopy = this.replaceSubFormsConditions(dataCopy, id, type);
+            subForms.forEach((subFormID) => {
+                dataCopy[subFormID].conditions = getInitialConditions(type);
+            });
         }
         dataCopy[id] = { ...dataCopy[id], ...handledValueObject };
         this.setState({
             data: dataCopy,
         });
-    }
-
-    replaceSubFormsConditions = (data, id, type) => {
-        data[id].subForms.forEach((subFormID) => {
-            data[subFormID].conditions = getInitialConditions(type);
-        });
-        return data;
     }
 
     constructForm = (dataKey) => {

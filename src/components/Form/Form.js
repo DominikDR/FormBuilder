@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import _random from 'lodash.random';
 import { Condition } from '../Condition/Condition';
 import { AddButton, DeleteButton } from '../Buttons/Buttons';
@@ -53,8 +54,8 @@ export class Form extends React.Component {
                     {parentType
                         && (
                             <Condition
-                                formID={formID}
                                 type={parentType}
+                                formID={formID}
                                 onConditionSelect={this.onConditionSelect}
                             />
                         )}
@@ -76,16 +77,30 @@ export class Form extends React.Component {
                     />
                 </form>
                 <AddButton
-                    onClick={this.handleAddSubForm}
                     type="button"
+                    onClick={this.handleAddSubForm}
                     text="Add Sub-Input"
                 />
                 <DeleteButton
-                    onClick={this.handleDeleteSubForm}
                     type="button"
+                    onClick={this.handleDeleteSubForm}
                     text="Delete"
                 />
             </li>
         );
     }
 }
+
+Form.propTypes = {
+    formID: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+    ]).isRequired,
+    formType: PropTypes.string.isRequired,
+    parentType: PropTypes.string,
+    question: PropTypes.string,
+    addSubForm: PropTypes.func.isRequired,
+    deleteSubForm: PropTypes.func.isRequired,
+    handleChange: PropTypes.func.isRequired,
+    setConditions: PropTypes.func.isRequired,
+};
