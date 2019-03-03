@@ -1,11 +1,12 @@
 import React from 'react';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 
 import styles from './Buttons.css';
 
-const Button = ({ type, onClick, className, text}) => (
+const Button = ({ onClick, className, text }) => (
     <button
-        type={type}
+        type="button"
         onClick={onClick}
         className={classnames(styles.formButton, className)}
     >
@@ -20,4 +21,10 @@ export {
     Button,
     AddButton,
     DeleteButton,
+};
+
+Button.propTypes = {
+    onClick: PropTypes.func.isRequired,
+    text: PropTypes.string,
+    className: PropTypes.string,
 };
