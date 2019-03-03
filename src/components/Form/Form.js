@@ -1,10 +1,15 @@
 import React from 'react';
-import classnames from 'classnames';
-import generateUniqueID from '../../generateUniqueID';
+import _random from 'lodash.random';
+import { Condition } from '../Condition/Condition';
+import { AddButton, DeleteButton } from '../Buttons/Buttons';
+import { Select } from '../Select/Select';
+import { type } from '../../selectOptions';
+import { MIN_RANGE, MAX_RANGE } from '../../../consts';
+import { getInitialConditions } from '../../../getInitialConditions';
 
 import styles from './Form.css';
 
-export default class Form extends React.PureComponent {
+export class Form extends React.Component {
     handleAddSubForm = () => {
         const { addSubForm, formID } = this.props;
         const newForm = this.createForm(formID);
@@ -16,33 +21,70 @@ export default class Form extends React.PureComponent {
         deleteSubForm(formID);
     }
 
-    createForm = (clickedFormID) => {
-        const newFormID = generateUniqueID();
+    createForm = (clickedForm) => {
+        const { formType } = this.props;
         const newForm = {
-            id: newFormID,
-            parentID: clickedFormID,
+            id: _random(MIN_RANGE, MAX_RANGE),
+            parentID: clickedForm,
+            conditions: getInitialConditions(formType),
+            type: 'radio',
             subForms: [],
         };
         return newForm;
     }
 
+    onConditionSelect = (conditionValue) => {
+        const { formID, setConditions } = this.props;
+        setConditions(formID, conditionValue);
+    }
+
+    getChange = (event) => {
+        const { formID, handleChange } = this.props;
+        const { target: { name, value } } = event;
+        handleChange(formID, { [name]: value });
+    }
+
     render() {
+        const { formID, parentType, question } = this.props;
+
         return (
             <li className={styles.formBox}>
-                <button
+                <form>
+                    {parentType
+                        && (
+                            <Condition
+                                formID={formID}
+                                type={parentType}
+                                onConditionSelect={this.onConditionSelect}
+                            />
+                        )}
+                    <label htmlFor={`${formID}`}>
+                        Question
+                        <input
+                            type="text"
+                            name="question"
+                            id={`${formID}`}
+                            onChange={this.getChange}
+                            defaultValue={question}
+                        />
+                    </label>
+                    <span>Type</span>
+                    <Select
+                        name="type"
+                        options={type}
+                        onChange={this.getChange}
+                    />
+                </form>
+                <AddButton
                     onClick={this.handleAddSubForm}
                     type="button"
-                    className={classnames(styles.formButton, styles.addButton)}
-                >
-                    Add Sub-Input
-                </button>
-                <button
+                    text="Add Sub-Input"
+                />
+                <DeleteButton
                     onClick={this.handleDeleteSubForm}
                     type="button"
-                    className={classnames(styles.formButton, styles.deleteButton)}
-                >
-                    Delete
-                </button>
+                    text="Delete"
+                />
             </li>
         );
     }

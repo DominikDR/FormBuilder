@@ -1,11 +1,14 @@
 import React, { Fragment } from 'react';
-import Form from '../Form/Form';
-import data from '../../data';
-import generateUniqueID from '../../generateUniqueID';
+import _random from 'lodash.random';
+import { Form } from '../Form/Form';
+import { AddButton } from '../Buttons/Buttons';
+import { data } from '../../data';
+import { MIN_RANGE, MAX_RANGE } from '../../../consts';
+import { getInitialConditions } from '../../../getInitialConditions';
 
 import styles from './FormTree.css';
 
-export default class FormTree extends React.Component {
+export class FormTree extends React.Component {
     state = {
         data,
     }
@@ -13,12 +16,14 @@ export default class FormTree extends React.Component {
     addForm = () => {
         const { data } = this.state;
         const newForm = {
-            id: generateUniqueID(),
+            id: _random(MIN_RANGE, MAX_RANGE),
+            type: 'radio',
             subForms: [],
         };
         this.setState({
             data: {
                 ...data,
+                sequence: [...data.sequence, newForm.id],
                 [newForm.id]: newForm,
             },
         });
@@ -50,6 +55,7 @@ export default class FormTree extends React.Component {
         }
 
         delete dataCopy[clickedFormID];
+        dataCopy.sequence = dataCopy.sequence.filter(id => id !== clickedFormID);
         this.setState({
             data: dataCopy,
         });
@@ -61,17 +67,64 @@ export default class FormTree extends React.Component {
         return [...subForms, ...subForms.map(this.sumNestedForms).flat()];
     }
 
+    setConditions = (id, conditions) => {
+        const { data } = this.state;
+        const { condition, radio, answerInput } = conditions;
+        const previousValue = data[id].conditions;
+        this.setState({
+            data: {
+                ...data,
+                [id]: {
+                    ...data[id],
+                    conditions: {
+                        condition: condition || previousValue.condition,
+                        comparisonValue: radio || answerInput || previousValue.comparisonValue,
+                    },
+                },
+            },
+        });
+    }
+
+    setChange = (id, handledValueObject) => {
+        const { data } = this.state;
+        let dataCopy = JSON.parse(JSON.stringify(data));
+        const { type } = handledValueObject;
+        const { subForms } = dataCopy[id];
+        if (type && subForms.length) {
+            dataCopy = this.replaceSubFormsConditions(dataCopy, id, type);
+        }
+        dataCopy[id] = { ...dataCopy[id], ...handledValueObject };
+        this.setState({
+            data: dataCopy,
+        });
+    }
+
+    replaceSubFormsConditions = (data, id, type) => {
+        data[id].subForms.forEach((subFormID) => {
+            data[subFormID].conditions = getInitialConditions(type);
+        });
+        return data;
+    }
+
     constructForm = (dataKey) => {
         const { data } = this.state;
+        const form = data[dataKey];
+        const parentType = form.parentID && data[form.parentID].type;
+
         return (
             <Fragment key={dataKey}>
                 <Form
-                    formID={data[dataKey].id}
+                    formID={form.id}
+                    formType={form.type}
+                    parentType={parentType}
+                    question={form.question}
                     addSubForm={this.addSubForm}
                     deleteSubForm={this.deleteSubForm}
+                    handleChange={this.setChange}
+                    setConditions={this.setConditions}
                 />
                 <ol className={styles.subTree}>
-                    {data[dataKey].subForms.map(this.constructForm)}
+                    {form.subForms.map(this.constructForm)}
                 </ol>
             </Fragment>
         );
@@ -81,14 +134,12 @@ export default class FormTree extends React.Component {
         const { data } = this.state;
         return (
             <div>
-                {Object.keys(data).filter(dataKey => !data[dataKey].parentID).map(this.constructForm)}
-                <button
+                {data.sequence.map(this.constructForm)}
+                <AddButton
                     onClick={this.addForm}
+                    text="Add Input"
                     type="button"
-                    className={styles.addFormButton}
-                >
-                    Add Input
-                </button>
+                />
             </div>
         );
     }

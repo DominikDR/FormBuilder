@@ -1,0 +1,28 @@
+.formButton {
+    height: 35px;
+    width: 120px;
+    font-size: 15px;
+    margin: 10px;
+    border: none;
+    border-radius: 7px;
+}
+.formButton:focus {
+    outline:none;
+  }
+.formButton:hover {
+    cursor: pointer;
+}
+
+.addButton {
+    background-color: #97e269;
+}
+.addButton:hover {
+    background-color: #7eca4e;
+}
+
+.deleteButton {
+    background-color: #e9967a;
+}
+.deleteButton:hover {
+    background-color: #dd7856;
+}
