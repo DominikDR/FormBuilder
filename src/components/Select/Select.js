@@ -9,7 +9,6 @@ const Select = ({ options, onChange, name }) => {
             name={name}
             type="typeSelect"
             defaultValue={options[0].value}
-            required
             onChange={onChange}
         >
             {options.map((option, index) => (

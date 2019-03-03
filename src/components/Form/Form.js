@@ -3,8 +3,9 @@ import _random from 'lodash.random';
 import { Condition } from '../Condition/Condition';
 import { AddButton, DeleteButton } from '../Buttons/Buttons';
 import { Select } from '../Select/Select';
-import { type, conditionOption, radioOptions } from '../../selectOptions';
+import { type } from '../../selectOptions';
 import { MIN_RANGE, MAX_RANGE } from '../../../consts';
+import { getInitialConditions } from '../../../getInitialConditions';
 
 import styles from './Form.css';
 
@@ -25,23 +26,14 @@ export class Form extends React.Component {
         const newForm = {
             id: _random(MIN_RANGE, MAX_RANGE),
             parentID: clickedForm,
-            conditions: this.setInitialConditions(formType),
+            conditions: getInitialConditions(formType),
             type: 'radio',
             subForms: [],
         };
         return newForm;
     }
 
-    setInitialConditions = (formType) => {
-        const defaultSelectValue = conditionOption[formType][0].value;
-        if (formType === 'radio') {
-            return [defaultSelectValue, radioOptions[0].value];
-        }
-        return [defaultSelectValue, ''];
-    }
-
     onConditionSelect = (conditionValue) => {
-		console.log('TCL: Form -> onConditionSelect -> conditionValue', conditionValue)
         const { formID, setConditions } = this.props;
         setConditions(formID, conditionValue);
     }

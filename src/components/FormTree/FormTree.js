@@ -4,6 +4,7 @@ import { Form } from '../Form/Form';
 import { AddButton } from '../Buttons/Buttons';
 import { data } from '../../data';
 import { MIN_RANGE, MAX_RANGE } from '../../../consts';
+import { getInitialConditions } from '../../../getInitialConditions';
 
 import styles from './FormTree.css';
 
@@ -39,7 +40,7 @@ export class FormTree extends React.Component {
                 },
                 [newForm.id]: newForm,
             },
-        }, () => {console.log('state', newForm); });
+        });
     }
 
     deleteSubForm = (clickedFormID) => {
@@ -68,30 +69,41 @@ export class FormTree extends React.Component {
 
     setConditions = (id, conditions) => {
         const { data } = this.state;
-        console.log("data[id.subForms]", data[data[id].subForms[0]])
+        const { condition, radio, answerInput } = conditions;
+        const previousValue = data[id].conditions;
         this.setState({
             data: {
                 ...data,
                 [id]: {
                     ...data[id],
-                    conditions: [...data[id].conditions, conditions],
+                    conditions: {
+                        condition: condition || previousValue.condition,
+                        comparisonValue: radio || answerInput || previousValue.comparisonValue,
+                    },
                 },
             },
-        }, () => {console.log('stateAftersetConditions', this.state.data); });
+        });
     }
 
     setChange = (id, handledValueObject) => {
-        const key = Object.keys(handledValueObject);
         const { data } = this.state;
+        let dataCopy = JSON.parse(JSON.stringify(data));
+        const { type } = handledValueObject;
+        const { subForms } = dataCopy[id];
+        if (type && subForms.length) {
+            dataCopy = this.replaceSubFormsConditions(dataCopy, id, type);
+        }
+        dataCopy[id] = { ...dataCopy[id], ...handledValueObject };
         this.setState({
-            data: {
-                ...data,
-                [id]: {
-                    ...data[id],
-                    [key]: handledValueObject[key],
-                },
-            },
-        }, () => {console.log('state', this.state.data); });
+            data: dataCopy,
+        });
+    }
+
+    replaceSubFormsConditions = (data, id, type) => {
+        data[id].subForms.forEach((subFormID) => {
+            data[subFormID].conditions = getInitialConditions(type);
+        });
+        return data;
     }
 
     constructForm = (dataKey) => {

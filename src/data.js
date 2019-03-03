@@ -15,6 +15,10 @@ const data = {
     b2: {
         id: 'b2',
         parentID: 'b3',
+        conditions: {
+            condition: 'equals',
+            comparisonValue: 'Ford',
+        },
         question: 'What color is your Ford?',
         type: 'text',
         subForms: [],
@@ -22,6 +26,10 @@ const data = {
     b3: {
         id: 'b3',
         parentID: 'a1',
+        conditions: {
+            condition: 'equals',
+            comparisonValue: 'yes',
+        },
         question: 'What is your car`s model?',
         type: 'text',
         subForms: ['b2', 'j8'],
@@ -29,6 +37,10 @@ const data = {
     j8: {
         id: 'j8',
         parentID: 'b3',
+        conditions: {
+            condition: 'less',
+            comparisonValue: '15',
+        },
         question: 'How old is your Ford?',
         type: 'number',
         subForms: [],
