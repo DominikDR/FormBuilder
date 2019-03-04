@@ -1,5 +1,70 @@
-.Form_formBox_1BSpTyBoMl0lEWc8pfr6if {
-    height: 140px;
+.Select_box_30XFAtiv0jUGzA21dQ9RSg {
+    height: 30px;
+    width: 100%;
+    text-align: left;
+    background-color: #fff;
+}
+
+.Input_input_JOAm_MoK5qS69nJyIQ_vV {
+    height: 30px;
+    width: 100%;
+    text-align: left;
+    box-sizing: border-box;
+    background-color: #fff;
+}
+
+.Input_label_3Fz-qw_A7mxYSc6c5lilP7 {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.Input_labelText_2C_1akR9nchdeVCkdyTudC {
+    width: 100px;
+}
+.Condition_conditionSelect_2emg7G5_Vd0z_G0kZEFk59 {
+    width: 165px;
+    margin-left: auto;
+}
+.Condition_radioSelect_kmoo__rI7REFeKd_5sT_X {
+    width: 125px;
+    margin-left: auto;
+}
+
+.Condition_input_tjmq8_PsvaURGyccRvbbT {
+    width: 125px;
+    margin-left: auto;
+}
+.Buttons_formButton_cIQUlFVQI0pYrhi86UKCL {
+    height: 35px;
+    width: 120px;
+    font-size: 15px;
+    margin: 10px;
+    border: none;
+    border-radius: 7px;
+}
+.Buttons_formButton_cIQUlFVQI0pYrhi86UKCL:focus {
+    outline:none;
+  }
+.Buttons_formButton_cIQUlFVQI0pYrhi86UKCL:hover {
+    cursor: pointer;
+}
+
+.Buttons_addButton_1jrb24iSd9yvGFKOJ_nqTq {
+    background-color: #97e269;
+}
+.Buttons_addButton_1jrb24iSd9yvGFKOJ_nqTq:hover {
+    background-color: #7eca4e;
+}
+
+.Buttons_deleteButton_299fP6AohEpfd3ROBrqRbE {
+    background-color: #e9967a;
+}
+.Buttons_deleteButton_299fP6AohEpfd3ROBrqRbE:hover {
+    background-color: #dd7856;
+}
+
+.Form_container_2HdoZhJCBs5cXXq9KCPrQZ {
     width: 410px;
     border: 2px solid #ababab;
     margin-bottom: 20px;
@@ -7,55 +72,21 @@
     background-color: #f3f3f3;
 }
 
-.Form_formButton_HzisNcYZJ3aeuu83k_CTi {
-    height: 35px;
-    font-size: 15px;
-    border-radius: 7px;
-    border: none;
-    margin: 10px;
-}
-.Form_formButton_HzisNcYZJ3aeuu83k_CTi:focus {
-    outline:none;
-  }
-.Form_formButton_HzisNcYZJ3aeuu83k_CTi:hover {
-    cursor: pointer;
+.Form_formBox_1BSpTyBoMl0lEWc8pfr6if {
+    padding: 12px;
 }
 
-.Form_addButton_1Sd2K1Ln842zezhHZjoBei {
-    width: 120px;
-    background-color: #97e269;
-}
-.Form_addButton_1Sd2K1Ln842zezhHZjoBei:hover {
-    background-color: #7eca4e;
+.Form_formBox_1BSpTyBoMl0lEWc8pfr6if > * {
+    margin: 3px;
+    display: flex;
+    align-items: center;
 }
 
-.Form_deleteButton_YdQHFGHN7bybISeusf8bW {
-    width: 80px;
-    border-radius: 7px;
-    background-color: #e9967a;
+.Form_label_2zNhUVlf5Ex6zBbqI32y0X {
+    width: 100px;
 }
-.Form_deleteButton_YdQHFGHN7bybISeusf8bW:hover {
-    background-color: #dd7856;
-}
-
-.FormTree_subList_e0E9tuetbMGHhy9cVtn1H {
-    border-left: 1px solid #ababab;
-}
-
-.FormTree_addFormButton_K4i6KAF4Pygpf50TUYOvT {
-    height: 35px;
-    width: 120px;
-    background-color: #97e269;
-    font-size: 15px;
-    border-radius: 7px;
-    border: none;
-}
-.FormTree_addFormButton_K4i6KAF4Pygpf50TUYOvT:focus {
-    outline:none;
-  }
-.FormTree_addFormButton_K4i6KAF4Pygpf50TUYOvT:hover {
-    cursor: pointer;
-    background-color: #7eca4e;
+.FormTree_subTree_nbsybgYDPf85DQwp5189h {
+    border-left: 1px solid #999999;
 }
 
 body {
