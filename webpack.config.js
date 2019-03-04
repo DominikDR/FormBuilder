@@ -8,7 +8,7 @@ const htmlPlugin = new HtmlWebPackPlugin({
 });
 
 module.exports = {
-    entry: './src/index.js',
+    entry: './src/index.jsx',
     output: {
         path: path.resolve('dist'),
         publicPath: '/',
@@ -31,8 +31,22 @@ module.exports = {
                         ],
                     },
                 }],
-            },
-            {
+            }, {
+                test: /\.jsx$/,
+                exclude: /node_modules/,
+                use: [{
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env', '@babel/preset-react'],
+                        plugins: [
+                            '@babel/plugin-proposal-class-properties',
+                            ['@babel/plugin-transform-runtime', {
+                                regenerator: true,
+                            }],
+                        ],
+                    },
+                }],
+            }, {
                 test: /\.css$/,
                 use: [
                     {
@@ -79,4 +93,7 @@ module.exports = {
             filename: 'styles.css',
         }),
     ],
+    resolve: {
+        extensions: ['.js', '.jsx'],
+    },
 };
