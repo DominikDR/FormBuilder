@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { conditionOption, radioOptions } from '../../selectOptions';
 import { Select } from '../Select/Select';
+import { Input } from '../Input/Input';
+
+import styles from './Condition.css';
 
 export class Condition extends React.PureComponent {
     handleChange = (event) => {
@@ -13,23 +16,34 @@ export class Condition extends React.PureComponent {
     render() {
         const { formID, type } = this.props;
         return (
-            <>
+            <div>
                 <span>Condition</span>
-                <Select options={conditionOption[type]} onChange={this.handleChange} name="condition" />
+                <Select
+                    options={conditionOption[type]}
+                    onChange={this.handleChange}
+                    name="condition"
+                    className={styles.conditionSelect}
+                />
                 {type === 'radio'
-                    ? <Select options={radioOptions} onChange={this.handleChange} name="radio" />
+                    ? (
+                        <Select
+                            options={radioOptions}
+                            onChange={this.handleChange}
+                            name="radio"
+                            className={styles.radioSelect}
+                        />
+                    )
                     : (
-                        <label htmlFor={`${formID}answer`}>
-                            <input
-                                type={type}
-                                id={`${formID}answer`}
-                                name="answerInput"
-                                onChange={this.handleChange}
-                            />
-                        </label>
+                        <Input
+                            id={`${formID}answer`}
+                            type={type}
+                            name="answerInput"
+                            onChange={this.handleChange}
+                            className={styles.input}
+                        />
                     )
                 }
-            </>
+            </div>
         );
     }
 }

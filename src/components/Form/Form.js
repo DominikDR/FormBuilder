@@ -4,6 +4,7 @@ import _random from 'lodash.random';
 import { Condition } from '../Condition/Condition';
 import { AddButton, DeleteButton } from '../Buttons/Buttons';
 import { Select } from '../Select/Select';
+import { Input } from '../Input/Input';
 import { type } from '../../selectOptions';
 import { MIN_RANGE, MAX_RANGE } from '../../../consts';
 import { getInitialConditions } from '../../../getInitialConditions';
@@ -49,8 +50,8 @@ export class Form extends React.Component {
         const { formID, parentType, question } = this.props;
 
         return (
-            <li className={styles.formBox}>
-                <form>
+            <li className={styles.container}>
+                <form className={styles.formBox}>
                     {parentType
                         && (
                             <Condition
@@ -59,22 +60,23 @@ export class Form extends React.Component {
                                 onConditionSelect={this.onConditionSelect}
                             />
                         )}
-                    <label htmlFor={`${formID}`}>
-                        Question
-                        <input
-                            type="text"
-                            name="question"
-                            id={`${formID}`}
-                            onChange={this.getChange}
-                            defaultValue={question}
-                        />
-                    </label>
-                    <span>Type</span>
-                    <Select
-                        name="type"
-                        options={type}
+                    <Input
+                        id={formID}
+                        labelText="Question"
+                        type="text"
+                        name="question"
                         onChange={this.getChange}
+                        defaultValue={question}
+                        className={styles.input}
                     />
+                    <div className={styles.type}>
+                        <span className={styles.label}>Type</span>
+                        <Select
+                            name="type"
+                            options={type}
+                            onChange={this.getChange}
+                        />
+                    </div>
                 </form>
                 <AddButton
                     type="button"
