@@ -1,8 +1,21 @@
-.formBox {
-    height: 140px;
+.container {
     width: 410px;
     border: 2px solid #ababab;
     margin-bottom: 20px;
     list-style-type: none;
     background-color: #f3f3f3;
+}
+
+.formBox {
+    padding: 12px;
+}
+
+.formBox > * {
+    margin: 3px;
+    display: flex;
+    align-items: center;
+}
+
+.label {
+    width: 100px;
 }
