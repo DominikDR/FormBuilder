@@ -9,7 +9,7 @@ import { getInitialConditions } from '../../../getInitialConditions';
 
 import styles from './FormTree.css';
 
-export class FormTree extends React.Component {
+class FormTreePrimary extends React.Component {
     addForm = () => {
         const newForm = {
             id: _random(MIN_RANGE, MAX_RANGE),
@@ -91,13 +91,10 @@ export class FormTree extends React.Component {
         });
     }
 
-    constructForm = (dataKey) => {
-        const { data } = this.props;
-        const form = data[dataKey];
-        const parentType = form.parentID && data[form.parentID].type;
-
+    render() {
+        const { form, subForms, parentType } = this.props;
         return (
-            <Fragment key={dataKey}>
+            <div>
                 <Form
                     formID={form.id}
                     formType={form.type}
@@ -109,17 +106,8 @@ export class FormTree extends React.Component {
                     setConditions={this.setConditions}
                 />
                 <ol className={styles.subTree}>
-                    {form.subForms.map(this.constructForm)}
+                    {subForms.map(id => <FormTree key={id} id={id} />)}
                 </ol>
-            </Fragment>
-        );
-    }
-
-    render() {
-        const { formsInSequence } = this.props;
-        return (
-            <div>
-                {formsInSequence.map(this.constructForm)}
                 <AddButton
                     onClick={this.addForm}
                     text="Add Input"
@@ -130,10 +118,13 @@ export class FormTree extends React.Component {
     }
 }
 
-const mapStateToProps = (data, ownProps) => {
+const mapStateToProps = ({ data }, ownProps) => {
     console.log("ownProps", ownProps);
+    const form = data[ownProps.id];
     return ({
-        formsInSequence: data.formsInSequence,
+        form,
+        subForms: form.subForms,
+        parentType: form.parentID && data[form.parentID].type,
         data,
     });
 };
@@ -142,4 +133,5 @@ const mapDispatchToProps = (dispatch) => {
 
 };
 
-export default connect(mapStateToProps)(FormTree);
+const FormTree = connect(mapStateToProps)(FormTreePrimary);
+export { FormTree };

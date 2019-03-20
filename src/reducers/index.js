@@ -1,8 +1,6 @@
 import { combineReducers } from 'redux';
 import { formTreeReducer } from './formTree';
 
-combineReducers({
-    formTree: formTreeReducer,
+export const combinedRedusers = combineReducers({
+    data: formTreeReducer,
 });
-
-export { combineReducers };
