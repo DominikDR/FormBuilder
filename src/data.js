@@ -1,5 +1,5 @@
 const data = {
-    sequence: ['a1', 'a2'],
+    formsInSequence: ['a1', 'a2'],
     a1: {
         id: 'a1',
         question: 'Do you own car?',

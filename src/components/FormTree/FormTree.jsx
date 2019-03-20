@@ -1,36 +1,26 @@
 import React, { Fragment } from 'react';
 import _random from 'lodash.random';
+import { connect } from 'react-redux';
+import { addForm as addFormAction } from '../../actions/formTree';
 import { Form } from '../Form/Form';
 import { AddButton } from '../Buttons/Buttons';
-import { data } from '../../data';
 import { MIN_RANGE, MAX_RANGE } from '../../../consts';
 import { getInitialConditions } from '../../../getInitialConditions';
 
 import styles from './FormTree.css';
 
 export class FormTree extends React.Component {
-    state = {
-        data,
-    }
-
     addForm = () => {
-        const { data } = this.state;
         const newForm = {
             id: _random(MIN_RANGE, MAX_RANGE),
             type: 'radio',
             subForms: [],
         };
-        this.setState({
-            data: {
-                ...data,
-                sequence: [...data.sequence, newForm.id],
-                [newForm.id]: newForm,
-            },
-        });
+        addFormAction(newForm);
     }
 
     addSubForm = (newForm) => {
-        const { data } = this.state;
+        const { data } = this.props;
         this.setState({
             data: {
                 ...data,
@@ -44,7 +34,7 @@ export class FormTree extends React.Component {
     }
 
     deleteSubForm = (clickedFormID) => {
-        const { data } = this.state;
+        const { data } = this.props;
         const dataCopy = JSON.parse(JSON.stringify(data));
         const sumNestedForms = this.sumNestedForms(clickedFormID);
         sumNestedForms.forEach((id) => { delete dataCopy[id]; });
@@ -55,20 +45,20 @@ export class FormTree extends React.Component {
         }
 
         delete dataCopy[clickedFormID];
-        dataCopy.sequence = dataCopy.sequence.filter(id => id !== clickedFormID);
+        dataCopy.formsInSequence = dataCopy.formsInSequence.filter(id => id !== clickedFormID);
         this.setState({
             data: dataCopy,
         });
     }
 
     sumNestedForms = (id) => {
-        const { data } = this.state;
+        const { data } = this.props;
         const { subForms } = data[id];
         return [...subForms, ...subForms.map(this.sumNestedForms).flat()];
     }
 
     setConditions = (id, conditions) => {
-        const { data } = this.state;
+        const { data } = this.props;
         const { condition, radio, answerInput } = conditions;
         const previousValue = data[id].conditions;
         this.setState({
@@ -86,7 +76,7 @@ export class FormTree extends React.Component {
     }
 
     setChange = (id, handledValueObject) => {
-        const { data } = this.state;
+        const { data } = this.props;
         const dataCopy = JSON.parse(JSON.stringify(data));
         const { type } = handledValueObject;
         const { subForms } = dataCopy[id];
@@ -102,7 +92,7 @@ export class FormTree extends React.Component {
     }
 
     constructForm = (dataKey) => {
-        const { data } = this.state;
+        const { data } = this.props;
         const form = data[dataKey];
         const parentType = form.parentID && data[form.parentID].type;
 
@@ -126,10 +116,10 @@ export class FormTree extends React.Component {
     }
 
     render() {
-        const { data } = this.state;
+        const { formsInSequence } = this.props;
         return (
             <div>
-                {data.sequence.map(this.constructForm)}
+                {formsInSequence.map(this.constructForm)}
                 <AddButton
                     onClick={this.addForm}
                     text="Add Input"
@@ -139,3 +129,17 @@ export class FormTree extends React.Component {
         );
     }
 }
+
+const mapStateToProps = (data, ownProps) => {
+    console.log("ownProps", ownProps);
+    return ({
+        formsInSequence: data.formsInSequence,
+        data,
+    });
+};
+
+const mapDispatchToProps = (dispatch) => {
+
+};
+
+export default connect(mapStateToProps)(FormTree);
