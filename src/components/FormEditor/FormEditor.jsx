@@ -6,9 +6,10 @@ import { AddButton } from '../Buttons/Buttons';
 import { createForm } from '../../createForm';
 
 class FormEditorPrimary extends React.Component {
-    addForm = () => {
+    handleAddForm = () => {
+        const { addForm } = this.props;
         console.log("motyla noga")
-        addFormAction(createForm(null, null));
+        addForm(createForm(null, null));
     };
 
     render() {
@@ -17,7 +18,7 @@ class FormEditorPrimary extends React.Component {
             <Fragment>
                 {formsInSequence.map(id => <FormTree key={id} formID={id} />)}
                 <AddButton
-                    onClick={this.addForm}
+                    onClick={this.handleAddForm}
                     text="Add Input"
                     type="button"
                 />

@@ -1,18 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Condition } from '../Condition/Condition';
 import { AddButton, DeleteButton } from '../Buttons/Buttons';
 import { Select } from '../Select/Select';
 import { Input } from '../Input/Input';
 import { type } from '../../selectOptions';
+import { addSubForm as addSubFormAction } from '../../actions/formTree';
 import { createForm } from '../../createForm';
 
 import styles from './Form.css';
 
 export class Form extends React.Component {
-    handleAddSubForm = () => {
-        const { addSubForm, formID, formType } = this.props;
-        addSubForm(createForm(formID, formType));
+    addSubForm = () => {
+        const { formID, formType } = this.props;
+        addSubFormAction(createForm(formID, formType));
     }
 
     handleDeleteSubForm = () => {
@@ -65,7 +67,7 @@ export class Form extends React.Component {
                 </form>
                 <AddButton
                     type="button"
-                    onClick={this.handleAddSubForm}
+                    onClick={this.addSubForm}
                     text="Add Sub-Input"
                 />
                 <DeleteButton
@@ -78,6 +80,28 @@ export class Form extends React.Component {
     }
 }
 
+/* const mapStateToProps = ({ data }, ownProps) => {
+    console.log("ownProps", ownProps);
+    const form = data[ownProps.formID];
+    return ({
+        formID: form.id,
+        parentID: form.parentID,
+        formType: form.type,
+        question: form.question,
+        subForms: form.subForms,
+        parentType: form.parentID && data[form.parentID].type,
+        data,
+    });
+};
+
+const mapDispatchToProps = (dispatch) => {
+
+};
+
+const FormTree = connect(mapStateToProps)(FormTreePrimary);
+export { FormTree };
+ */
+
 Form.propTypes = {
     formID: PropTypes.oneOfType([
         PropTypes.string,
@@ -86,7 +110,7 @@ Form.propTypes = {
     formType: PropTypes.string.isRequired,
     parentType: PropTypes.string,
     question: PropTypes.string,
-    addSubForm: PropTypes.func.isRequired,
+    // addSubForm: PropTypes.func.isRequired,
     deleteSubForm: PropTypes.func.isRequired,
     handleChange: PropTypes.func.isRequired,
     setConditions: PropTypes.func.isRequired,

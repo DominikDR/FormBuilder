@@ -6,20 +6,6 @@ import { getInitialConditions } from '../../getInitialConditions';
 import styles from './FormTree.css';
 
 class FormTreePrimary extends React.Component {
-    addSubForm = (newForm) => {
-        const { data } = this.props;
-        this.setState({
-            data: {
-                ...data,
-                [newForm.parentID]: {
-                    ...data[newForm.parentID],
-                    subForms: [...data[newForm.parentID].subForms, newForm.id],
-                },
-                [newForm.id]: newForm,
-            },
-        });
-    }
-
     deleteSubForm = (clickedFormID) => {
         const { data } = this.props;
         const dataCopy = JSON.parse(JSON.stringify(data));
@@ -112,6 +98,7 @@ const mapStateToProps = ({ data }, ownProps) => {
     const form = data[ownProps.formID];
     return ({
         formID: form.id,
+        parentID: form.parentID,
         formType: form.type,
         question: form.question,
         subForms: form.subForms,
