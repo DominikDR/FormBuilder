@@ -22,7 +22,7 @@ const radioOptions = [{
     value: 'no', label: 'No',
 }];
 
-module.exports = {
+export {
     type,
     conditionOption,
     radioOptions,

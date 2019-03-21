@@ -1,4 +1,4 @@
-import { conditionOption, radioOptions } from './src/selectOptions';
+import { conditionOption, radioOptions } from './selectOptions';
 
 export const getInitialConditions = (formType) => {
     const defaultConditon = conditionOption[formType][0].value;

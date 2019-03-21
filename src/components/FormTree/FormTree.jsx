@@ -1,24 +1,11 @@
-import React, { Fragment } from 'react';
-import _random from 'lodash.random';
+import React from 'react';
 import { connect } from 'react-redux';
-import { addForm as addFormAction } from '../../actions/formTree';
 import { Form } from '../Form/Form';
-import { AddButton } from '../Buttons/Buttons';
-import { MIN_RANGE, MAX_RANGE } from '../../../consts';
-import { getInitialConditions } from '../../../getInitialConditions';
+import { getInitialConditions } from '../../getInitialConditions';
 
 import styles from './FormTree.css';
 
 class FormTreePrimary extends React.Component {
-    addForm = () => {
-        const newForm = {
-            id: _random(MIN_RANGE, MAX_RANGE),
-            type: 'radio',
-            subForms: [],
-        };
-        addFormAction(newForm);
-    }
-
     addSubForm = (newForm) => {
         const { data } = this.props;
         this.setState({
@@ -92,27 +79,29 @@ class FormTreePrimary extends React.Component {
     }
 
     render() {
-        const { form, subForms, parentType } = this.props;
+        const {
+            formID,
+            formType,
+            question,
+            subForms,
+            parentType,
+        } = this.props;
+
         return (
             <div>
                 <Form
-                    formID={form.id}
-                    formType={form.type}
+                    formID={formID}
+                    formType={formType}
                     parentType={parentType}
-                    question={form.question}
+                    question={question}
                     addSubForm={this.addSubForm}
                     deleteSubForm={this.deleteSubForm}
                     handleChange={this.setChange}
                     setConditions={this.setConditions}
                 />
                 <ol className={styles.subTree}>
-                    {subForms.map(id => <FormTree key={id} id={id} />)}
+                    {subForms.map(id => <FormTree key={id} formID={id} />)}
                 </ol>
-                <AddButton
-                    onClick={this.addForm}
-                    text="Add Input"
-                    type="button"
-                />
             </div>
         );
     }
@@ -120,9 +109,11 @@ class FormTreePrimary extends React.Component {
 
 const mapStateToProps = ({ data }, ownProps) => {
     console.log("ownProps", ownProps);
-    const form = data[ownProps.id];
+    const form = data[ownProps.formID];
     return ({
-        form,
+        formID: form.id,
+        formType: form.type,
+        question: form.question,
         subForms: form.subForms,
         parentType: form.parentID && data[form.parentID].type,
         data,

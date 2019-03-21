@@ -1,38 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import _random from 'lodash.random';
 import { Condition } from '../Condition/Condition';
 import { AddButton, DeleteButton } from '../Buttons/Buttons';
 import { Select } from '../Select/Select';
 import { Input } from '../Input/Input';
 import { type } from '../../selectOptions';
-import { MIN_RANGE, MAX_RANGE } from '../../../consts';
-import { getInitialConditions } from '../../../getInitialConditions';
+import { createForm } from '../../createForm';
 
 import styles from './Form.css';
 
 export class Form extends React.Component {
     handleAddSubForm = () => {
-        const { addSubForm, formID } = this.props;
-        const newForm = this.createForm(formID);
-        addSubForm(newForm);
+        const { addSubForm, formID, formType } = this.props;
+        addSubForm(createForm(formID, formType));
     }
 
     handleDeleteSubForm = () => {
         const { deleteSubForm, formID } = this.props;
         deleteSubForm(formID);
-    }
-
-    createForm = (clickedForm) => {
-        const { formType } = this.props;
-        const newForm = {
-            id: _random(MIN_RANGE, MAX_RANGE),
-            parentID: clickedForm,
-            conditions: getInitialConditions(formType),
-            type: 'radio',
-            subForms: [],
-        };
-        return newForm;
     }
 
     onConditionSelect = (conditionValue) => {
