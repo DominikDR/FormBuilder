@@ -8,7 +8,6 @@ import { createForm } from '../../createForm';
 class FormEditorPrimary extends React.Component {
     handleAddForm = () => {
         const { addForm } = this.props;
-        console.log("motyla noga")
         addForm(createForm(null, null));
     };
 
@@ -31,11 +30,8 @@ const mapStateToProps = ({ data }) => ({
     formsInSequence: data.formsInSequence,
 });
 const mapDispatchToProps = (dispatch) => {
-	console.log('TCL: mapDispatchToProps -> dispatch', dispatch)
     return ({
-        addForm: () => {
-            dispatch(addFormAction(createForm(null, null)));
-        },
+        addForm: () => dispatch(addFormAction(createForm(null, null))),
     });
 };
 

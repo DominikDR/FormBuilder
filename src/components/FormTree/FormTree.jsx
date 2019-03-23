@@ -80,7 +80,7 @@ class FormTreePrimary extends React.Component {
                     formType={formType}
                     parentType={parentType}
                     question={question}
-                    addSubForm={this.addSubForm}
+                    // addSubForm={this.addSubForm}
                     deleteSubForm={this.deleteSubForm}
                     handleChange={this.setChange}
                     setConditions={this.setConditions}
@@ -94,7 +94,6 @@ class FormTreePrimary extends React.Component {
 }
 
 const mapStateToProps = ({ data }, ownProps) => {
-    console.log("ownProps", ownProps);
     const form = data[ownProps.formID];
     return ({
         formID: form.id,
@@ -107,9 +106,9 @@ const mapStateToProps = ({ data }, ownProps) => {
     });
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => ({
 
-};
+});
 
-const FormTree = connect(mapStateToProps)(FormTreePrimary);
+const FormTree = connect(mapStateToProps, mapDispatchToProps)(FormTreePrimary);
 export { FormTree };

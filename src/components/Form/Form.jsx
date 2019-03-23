@@ -11,10 +11,10 @@ import { createForm } from '../../createForm';
 
 import styles from './Form.css';
 
-export class Form extends React.Component {
-    addSubForm = () => {
-        const { formID, formType } = this.props;
-        addSubFormAction(createForm(formID, formType));
+export class FormPrimary extends React.Component {
+    handleAddSubForm = () => {
+        const { formID, formType, addSubForm } = this.props;
+        addSubForm(createForm(formID, formType));
     }
 
     handleDeleteSubForm = () => {
@@ -67,7 +67,7 @@ export class Form extends React.Component {
                 </form>
                 <AddButton
                     type="button"
-                    onClick={this.addSubForm}
+                    onClick={this.handleAddSubForm}
                     text="Add Sub-Input"
                 />
                 <DeleteButton
@@ -80,8 +80,7 @@ export class Form extends React.Component {
     }
 }
 
-/* const mapStateToProps = ({ data }, ownProps) => {
-    console.log("ownProps", ownProps);
+const mapStateToProps = ({ data }, ownProps) => {
     const form = data[ownProps.formID];
     return ({
         formID: form.id,
@@ -94,13 +93,16 @@ export class Form extends React.Component {
     });
 };
 
-const mapDispatchToProps = (dispatch) => {
-
+const mapDispatchToProps = (dispatch, ownProps) => {
+    const { formID, formType } = ownProps;
+    return ({
+        addSubForm: () => dispatch(addSubFormAction(createForm(formID, formType))),
+    });
 };
 
-const FormTree = connect(mapStateToProps)(FormTreePrimary);
-export { FormTree };
- */
+const Form = connect(mapStateToProps, mapDispatchToProps)(FormPrimary);
+export { Form };
+
 
 Form.propTypes = {
     formID: PropTypes.oneOfType([
