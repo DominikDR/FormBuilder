@@ -6,7 +6,8 @@ import { AddButton, DeleteButton } from '../Buttons/Buttons';
 import { Select } from '../Select/Select';
 import { Input } from '../Input/Input';
 import { type } from '../../selectOptions';
-import { addSubForm as addSubFormAction } from '../../actions/formTree';
+import { addSubForm as addSubFormAction,
+    deleteForm as deleteFormAction } from '../../actions/formTree';
 import { createForm } from '../../createForm';
 
 import styles from './Form.css';
@@ -14,12 +15,13 @@ import styles from './Form.css';
 export class FormPrimary extends React.Component {
     handleAddSubForm = () => {
         const { formID, formType, addSubForm } = this.props;
+		console.log("TCL: FormPrimary -> handleAddSubForm -> formID", formID)
         addSubForm(createForm(formID, formType));
     }
 
-    handleDeleteSubForm = () => {
-        const { deleteSubForm, formID } = this.props;
-        deleteSubForm(formID);
+    handleDeleteForm = () => {
+        const { deleteForm, formID } = this.props;
+        deleteForm(formID);
     }
 
     onConditionSelect = (conditionValue) => {
@@ -72,7 +74,7 @@ export class FormPrimary extends React.Component {
                 />
                 <DeleteButton
                     type="button"
-                    onClick={this.handleDeleteSubForm}
+                    onClick={this.handleDeleteForm}
                     text="Delete"
                 />
             </li>
@@ -80,27 +82,15 @@ export class FormPrimary extends React.Component {
     }
 }
 
-const mapStateToProps = ({ data }, ownProps) => {
-    const form = data[ownProps.formID];
-    return ({
-        formID: form.id,
-        parentID: form.parentID,
-        formType: form.type,
-        question: form.question,
-        subForms: form.subForms,
-        parentType: form.parentID && data[form.parentID].type,
-        data,
-    });
-};
-
 const mapDispatchToProps = (dispatch, ownProps) => {
     const { formID, formType } = ownProps;
     return ({
         addSubForm: () => dispatch(addSubFormAction(createForm(formID, formType))),
+        deleteForm: () => dispatch(deleteFormAction(formID)),
     });
 };
 
-const Form = connect(mapStateToProps, mapDispatchToProps)(FormPrimary);
+const Form = connect(null, mapDispatchToProps)(FormPrimary);
 export { Form };
 
 
@@ -113,7 +103,7 @@ Form.propTypes = {
     parentType: PropTypes.string,
     question: PropTypes.string,
     // addSubForm: PropTypes.func.isRequired,
-    deleteSubForm: PropTypes.func.isRequired,
+    // deleteForm: PropTypes.func.isRequired,
     handleChange: PropTypes.func.isRequired,
     setConditions: PropTypes.func.isRequired,
 };

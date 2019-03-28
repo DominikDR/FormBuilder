@@ -1,8 +1,8 @@
 import { data } from '../data';
-import { ADD_FORM, ADD_SUB_FORM } from '../actions/formTree';
+import { ADD_FORM, ADD_SUB_FORM, DELETE_FORM } from '../actions/formTree';
+import { deleteForm } from '../deleteForm';
 
 const formTreeReducer = (state = data, action) => {
-	console.log('TCL: formTreeReducer -> action', action)
     switch (action.type) {
         case ADD_FORM: {
             const newForm = action.payload;
@@ -22,6 +22,10 @@ const formTreeReducer = (state = data, action) => {
                 },
                 [newForm.id]: newForm,
             };
+        }
+        case DELETE_FORM: {
+            const clickedFormID = action.payload;
+            return deleteForm(state, clickedFormID);
         }
         default:
             return state;

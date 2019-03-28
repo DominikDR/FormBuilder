@@ -6,30 +6,6 @@ import { getInitialConditions } from '../../getInitialConditions';
 import styles from './FormTree.css';
 
 class FormTreePrimary extends React.Component {
-    deleteSubForm = (clickedFormID) => {
-        const { data } = this.props;
-        const dataCopy = JSON.parse(JSON.stringify(data));
-        const sumNestedForms = this.sumNestedForms(clickedFormID);
-        sumNestedForms.forEach((id) => { delete dataCopy[id]; });
-
-        const { parentID } = dataCopy[clickedFormID];
-        if (dataCopy[parentID]) {
-            dataCopy[parentID].subForms = dataCopy[parentID].subForms.filter(id => id !== clickedFormID);
-        }
-
-        delete dataCopy[clickedFormID];
-        dataCopy.formsInSequence = dataCopy.formsInSequence.filter(id => id !== clickedFormID);
-        this.setState({
-            data: dataCopy,
-        });
-    }
-
-    sumNestedForms = (id) => {
-        const { data } = this.props;
-        const { subForms } = data[id];
-        return [...subForms, ...subForms.map(this.sumNestedForms).flat()];
-    }
-
     setConditions = (id, conditions) => {
         const { data } = this.props;
         const { condition, radio, answerInput } = conditions;
@@ -81,7 +57,7 @@ class FormTreePrimary extends React.Component {
                     parentType={parentType}
                     question={question}
                     // addSubForm={this.addSubForm}
-                    deleteSubForm={this.deleteSubForm}
+                    // deleteSubForm={this.deleteSubForm}
                     handleChange={this.setChange}
                     setConditions={this.setConditions}
                 />
