@@ -31,7 +31,7 @@ const mapStateToProps = ({ data }) => ({
 });
 const mapDispatchToProps = (dispatch) => {
     return ({
-        addForm: () => dispatch(addFormAction(createForm(null, null))),
+        addForm: createForm => dispatch(addFormAction(createForm)),
     });
 };
 

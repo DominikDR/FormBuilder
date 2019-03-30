@@ -15,7 +15,7 @@ const data = {
     b2: {
         id: 'b2',
         parentID: 'b3',
-        conditions: {
+        conditionData: {
             condition: 'equals',
             comparisonValue: 'Ford',
         },
@@ -26,7 +26,7 @@ const data = {
     b3: {
         id: 'b3',
         parentID: 'a1',
-        conditions: {
+        conditionData: {
             condition: 'equals',
             comparisonValue: 'yes',
         },
@@ -37,7 +37,7 @@ const data = {
     j8: {
         id: 'j8',
         parentID: 'b3',
-        conditions: {
+        conditionData: {
             condition: 'less',
             comparisonValue: '15',
         },

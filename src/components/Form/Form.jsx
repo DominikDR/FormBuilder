@@ -14,19 +14,13 @@ import styles from './Form.css';
 
 export class FormPrimary extends React.Component {
     handleAddSubForm = () => {
-        const { formID, formType, addSubForm } = this.props;
-		console.log("TCL: FormPrimary -> handleAddSubForm -> formID", formID)
-        addSubForm(createForm(formID, formType));
+        const { addSubForm } = this.props;
+        addSubForm();
     }
 
     handleDeleteForm = () => {
-        const { deleteForm, formID } = this.props;
-        deleteForm(formID);
-    }
-
-    onConditionSelect = (conditionValue) => {
-        const { formID, setConditions } = this.props;
-        setConditions(formID, conditionValue);
+        const { deleteForm } = this.props;
+        deleteForm();
     }
 
     getChange = (event) => {
@@ -46,7 +40,6 @@ export class FormPrimary extends React.Component {
                             <Condition
                                 type={parentType}
                                 formID={formID}
-                                onConditionSelect={this.onConditionSelect}
                             />
                         )}
                     <Input
@@ -105,5 +98,4 @@ Form.propTypes = {
     // addSubForm: PropTypes.func.isRequired,
     // deleteForm: PropTypes.func.isRequired,
     handleChange: PropTypes.func.isRequired,
-    setConditions: PropTypes.func.isRequired,
 };

@@ -6,24 +6,6 @@ import { getInitialConditions } from '../../getInitialConditions';
 import styles from './FormTree.css';
 
 class FormTreePrimary extends React.Component {
-    setConditions = (id, conditions) => {
-        const { data } = this.props;
-        const { condition, radio, answerInput } = conditions;
-        const previousValue = data[id].conditions;
-        this.setState({
-            data: {
-                ...data,
-                [id]: {
-                    ...data[id],
-                    conditions: {
-                        condition: condition || previousValue.condition,
-                        comparisonValue: radio || answerInput || previousValue.comparisonValue,
-                    },
-                },
-            },
-        });
-    }
-
     setChange = (id, handledValueObject) => {
         const { data } = this.props;
         const dataCopy = JSON.parse(JSON.stringify(data));
@@ -56,10 +38,8 @@ class FormTreePrimary extends React.Component {
                     formType={formType}
                     parentType={parentType}
                     question={question}
-                    // addSubForm={this.addSubForm}
-                    // deleteSubForm={this.deleteSubForm}
                     handleChange={this.setChange}
-                    setConditions={this.setConditions}
+                    //setConditions={this.setConditions}
                 />
                 <ol className={styles.subTree}>
                     {subForms.map(id => <FormTree key={id} formID={id} />)}
@@ -82,9 +62,5 @@ const mapStateToProps = ({ data }, ownProps) => {
     });
 };
 
-const mapDispatchToProps = dispatch => ({
-
-});
-
-const FormTree = connect(mapStateToProps, mapDispatchToProps)(FormTreePrimary);
+const FormTree = connect(mapStateToProps, null)(FormTreePrimary);
 export { FormTree };

@@ -1,16 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { conditionOption, radioOptions } from '../../selectOptions';
 import { Select } from '../Select/Select';
 import { Input } from '../Input/Input';
+import { setConditions as setConditionsAction } from '../../actions/formTree';
 
 import styles from './Condition.css';
 
-export class Condition extends React.PureComponent {
+export class ConditionPrimary extends React.PureComponent {
     handleChange = (event) => {
-        const { onConditionSelect } = this.props;
+        const { setConditions } = this.props;
         const { target: { name, value } } = event;
-        onConditionSelect({ [name]: value });
+        setConditions({ [name]: value });
     }
 
     render() {
@@ -48,11 +50,21 @@ export class Condition extends React.PureComponent {
     }
 }
 
+const mapDispatchToProps = (dispatch, ownProps) => {
+    const { formID } = ownProps;
+    return ({
+        setConditions: conditionValue => dispatch(setConditionsAction(formID, conditionValue)),
+    });
+};
+
+const Condition = connect(null, mapDispatchToProps)(ConditionPrimary);
+export { Condition };
+
 Condition.propTypes = {
     type: PropTypes.string.isRequired,
     formID: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.number,
     ]).isRequired,
-    onConditionSelect: PropTypes.func.isRequired,
+    //onConditionSelect: PropTypes.func.isRequired,
 };
